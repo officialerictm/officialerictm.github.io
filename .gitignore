@@ -1,0 +1,23 @@
+# $HOME .gitignore — defensive structural enforcement of "never push from home dir".
+#
+# Remote: officialerictm.github.io.git (PUBLIC GitHub Pages site).
+#
+# Strategy: default-deny everything, then allow-by-exception for files we
+# explicitly intend to track. To track a new file, add a `!<path>` line below
+# — do not weaken or remove the `*` line.
+#
+# Why this exists: $HOME holds dotfiles, credentials, ultraplan teleport
+# artifacts, transcript fragments, and assorted operational debris. The site
+# remote is public. A single accidental `git add .` could publish any of it.
+# The behavioral rule "never push from home" is now backed by a structural one.
+
+# Default: ignore everything.
+*
+
+# Allow this file itself so the policy can be tracked and updated.
+!.gitignore
+
+# Currently tracked files (as of 2026-05-04). To add more, append `!<path>` lines.
+!CLAUDE.md
+!README.md
+!readme.md
