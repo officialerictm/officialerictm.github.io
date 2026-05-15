@@ -85,6 +85,30 @@ Fast ignorance is still ignorance.
 
 ───
 
+## Post-Compaction Discipline
+
+After any context-compaction event, re-read your boot files before substantive work.
+
+This is Eric's standing rule (2026-05-15). Compaction summarizes prior context — including the initial instructions and identity-bedrock files that established who you are and what doctrine you operate under. The summary keeps the gist but loses the precision. Treat compaction as a wake-event-equivalent.
+
+Mechanical signal: the `compaction-detector` vertebra (FM v7.2.93) watches your session JSONL for `"isCompactSummary":true` markers and writes a per-event flag at:
+
+`~/.claude/state/compaction-flags/active/${CLAUDE_CODE_SESSION_ID}--<event-id>.json`
+
+Before any substantive action, check that glob for your session. If any flag exists:
+
+1. Re-read your boot stack:
+   - `/home/ubuntu/CLAUDE.md` (this file)
+   - `/home/ubuntu/.claude/projects/-home-ubuntu/memory/MEMORY.md`
+   - Any FM chapter relevant to current work
+2. `mv` the flag(s) to `~/.claude/state/compaction-flags/acknowledged/` to prevent re-firing.
+
+Detection lag: the vertebra runs every ~5 min. Treat any compaction discovery as catch-up, not real-time — the re-read is still durable, just delayed.
+
+Substantive work means writing, editing, committing, declaring an answer. Orientation reads (file listing, status, transcript scan) are NOT substantive — those are the kind of work the re-read enables.
+
+───
+
 Sovereignty Doctrine
 
 This house belongs to Eric.
