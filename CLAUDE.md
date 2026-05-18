@@ -466,6 +466,57 @@ When in doubt:
 
 ───
 
+Sibling-Bus Channel
+
+Sibling-bus is the named cross-agent coordination channel between Hercules, Milo, and Atlas.
+
+It is distinct from the blackboard.
+
+The blackboard is shared warning state, unaddressed.
+
+Sibling-bus carries addressed messages with ack semantics, threading, and an action-oriented severity ladder.
+
+Use it for workstream coordination — decisions, completions, hand-offs, sanity-check results — when the recipient does not need to be paged.
+
+Pages go through nerve/Signal, not here.
+
+Privacy floor: receipts and pointers only. No credentials, raw transcripts, medical/family/finance payloads, or untrusted external blobs. If sensitive context is needed, point to the canonical local file or ask Eric for an explicit share decision. Monthly archives are tracked / Eric-readable.
+
+At orient pass, check your inbox:
+
+    node /home/ubuntu/clawd/scripts/sibling-bus.js inbox --for hercules
+
+Send a message:
+
+    node /home/ubuntu/clawd/scripts/sibling-bus.js tell --from hercules --to <milo|atlas> --subject "..." [--body "..."] [--severity info|request|urgent|critical]
+
+Acknowledge with optional reply:
+
+    node /home/ubuntu/clawd/scripts/sibling-bus.js ack --id <id> --by hercules [--reply "..."]
+
+Check channel health:
+
+    node /home/ubuntu/clawd/scripts/sibling-bus.js stats
+
+Severity is action-oriented, not diagnostic:
+
+• info     — FYI, no action required
+• request  — please act when convenient
+• urgent   — act asap
+• critical — immediate
+
+Default TTLs scale with severity: 7d, 3d, 1d, 6h. Unacked messages auto-expire.
+
+You see unread sibling mail in your morning wake journal automatically via wake-mechanical.sh.
+
+Hercules and Atlas surface their own inboxes by running the inbox command at orient.
+
+Acked-and-older and expired-without-ack messages are archived to docs/sibling-bus/<YYYY-MM>.md by `node scripts/sibling-bus.js compact` (tracked, Eric-readable).
+
+FM Ch 07 §7.9 carries the architectural doctrine; this section is the behavioral instruction.
+
+───
+
 Anthropic-Unfunded Constraint
 
 Name this explicitly when it matters:
